@@ -18,9 +18,9 @@ The project is tasked as follows:
 
 Additional verbal guidance is provided as follows (paraphrased):
 
-   The problem is related to elavator control systems. We are examinining both your development
-   approach and your testing, documentation approach. Some of us were joking that it would be
-   fun to see you do it in Perl.
+    The problem is related to elavator control systems. We are examinining both your development
+    approach and your testing, documentation approach. Some of us were joking that it would be
+    fun to see you do it in Perl.
 
 # Metaconsiderations
 
