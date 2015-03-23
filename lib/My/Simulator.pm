@@ -4,6 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 use Params::Util ':ALL';
+use List::Util 'first';
 use My::Controller;
 use My::Passenger;
 use My::Elevator;
@@ -34,6 +35,7 @@ sub new {
 	$self->{queue} = [ @{$self->passengers} ];
 
 	# Set up simulation state
+	$self->{tick} = 0;
 	$self->{lobbies} = [
 		map {
 			My::Lobby->new(floor => $_)
@@ -50,6 +52,14 @@ sub new {
 	return $self;
 }
 
+sub lobby {
+	$_[0]->{lobbies}->[$_[1]] or die "Missing or invalid floor";
+}
+
+sub elevator {
+	$_[0]->{elevators}->[$_[1]] or die "Missing or invalid elevator";
+}
+
 
 
 
@@ -62,23 +72,20 @@ sub new {
 sub run {
 	my $self = shift;
 
-	# Might as well be private until the controller needs to be time aware
-	my $tick = 0;
-
 	# Track the simulation halting
 	my $halting = 0;
 
 	while ( not $halting ) {
-		$tick++;
+		$self->{tick}++;
 		$halting = 1;
 
 		# Handle the accidental infinite loop
-		if ($tick > 1_000_000_000) {
+		if ($self->{tick} > 1_000_000_000) {
 			die "Aborting simulation, ran too long";
 		}
 
 		# New passengers arrive
-		while ( $self->{queue}->[0] and $self->{queue}->[0]->arrival_time == $tick ) {
+		while ( $self->{queue}->[0] and $self->{queue}->[0]->arrival_time == $self->{tick} ) {
 			$self->passenger_arrival(shift @{$self->{queue}});
 			$halting = 0;
 		}
@@ -108,8 +115,25 @@ sub run {
 }
 
 sub passenger_arrival {
-	my $self = shift;
+	my $self      = shift;
 	my $passenger = shift;
+	my $floor     = $passenger->entry_floor;
+
+	# We naively get into any elevator stopped here
+	my $elevator = first { $_->is_stopped_at($floor) } @{$self->elevators};
+	if ($elevator) {
+		# The passenger boards and presses the floor button
+		$elevator->add_passenger($passenger);
+		$self->controller->elevator_floor_button_pressed($elevator, $passenger->exit_floor);
+		$passenger->{entry_time} = $self->{tick};
+	} else {
+		my $lobby = $self->lobby($floor);
+		if ($passenger->exit_floor > $floor) {
+			$self->controller->floor_up_button_pressed($floor);
+		} else {
+			$self->controller->floor_down_button_pressed($floor);
+		}
+	}
 }
 
 1;

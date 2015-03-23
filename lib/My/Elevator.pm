@@ -81,6 +81,12 @@ sub stop {
 	$self->{velocity} = 0;
 }
 
+# Add a passenger to the elevator
+sub add_passenger {
+	push @{$_[0]->passengers}, $_[1];
+}
+
+
 
 
 
@@ -95,10 +101,14 @@ sub is_stopped {
 	$_[0]->{velocity} == 0;
 }
 
+sub is_stopped_at {
+	$_[0]->is_stopped and $_[0]->current_floor == $_[1];
+}
+
 # Is the elevator at rest at a floor.
 # Returns undef if not at rest at a floor
 sub current_floor {
-	$_[0]->is_stopped ? $_[0]->floor : undef;
+	$_[0]->is_stopped ? $_[0]->_floor : undef;
 }
 
 sub has_destination {

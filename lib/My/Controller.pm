@@ -31,12 +31,26 @@ sub new {
 ######################################################################
 # Event Handlers
 
-sub passenger_arrives {
-	my $self      = shift;
-	my $passenger = shift;
+sub elevator_floor_button_pressed {
+	my $self     = shift;
+	my $elevator = shift;
+	my $floor    = shift;
 
-	# Null Implementation
+	# Null implementation
 }
 
+sub floor_up_button_pressed {
+	my $self = shift;
+	my $floor = shift;
+
+	# Null implementation
+}
+
+sub floor_down_button_pressed {
+	my $self = shift;
+	my $floor = shift;
+
+	# Null implementation
+}
 
 1;

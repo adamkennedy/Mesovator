@@ -3,6 +3,7 @@ package My::Passenger;
 use 5.010;
 use strict;
 use warnings;
+use Params::Util ':ALL';
 use Object::Tiny qw{
 	arrival_time
 	entry_floor
