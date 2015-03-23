@@ -14,7 +14,7 @@ our $VERSION = '0.01';
 sub new {
 	my $self = shift->SUPER::new(@_);
 
-	unless (_POSINT($self->floors)) {
+	unless (_POSINT($self->floors) and $self->floor > 1) {
 		die "Missing or invalid floors";
 	}
 	unless (_POSINT($self->elevators)) {
@@ -24,6 +24,9 @@ sub new {
 	return $self;
 }
 
+sub top_floor {
+	$_[0]->floors - 1;
+}
 
 
 
