@@ -145,6 +145,9 @@ sub current_destination {
 
 # Up/Down Indicator Logic.
 # Elevators CAN go both up and down.
+# This is also very limiting as a concept, since we MIGHT take you up one
+# level in order to take you down on an express. So we can't necesarily say that
+# you can only go in one direction.
 
 # Can the elevator service an up request right now.
 sub going_up {
