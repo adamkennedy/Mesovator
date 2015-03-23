@@ -79,7 +79,7 @@ sub run {
 
 		# New passengers arrive
 		while ( $self->{queue}->[0] and $self->{queue}->[0]->arrival_time == $tick ) {
-			$self->passenger_arrives(shift @{$self->{queue}});
+			$self->passenger_arrival(shift @{$self->{queue}});
 			$halting = 0;
 		}
 
@@ -107,7 +107,7 @@ sub run {
 	return 1;
 }
 
-sub passenger_arrives {
+sub passenger_arrival {
 	my $self = shift;
 	my $passenger = shift;
 }
