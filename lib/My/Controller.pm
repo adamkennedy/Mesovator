@@ -39,6 +39,21 @@ sub elevator_floor_button_pressed {
 	# Null implementation
 }
 
+sub elevator_stopped_at_floor {
+	my $self = shift;
+	my $elevator = shift;
+	my $floor = shift;
+
+	# Null implementation
+}
+
+sub elevator_idle {
+	my $self = shift;
+	my $elevator = shift;
+
+	# Null implementation
+}
+
 sub floor_up_button_pressed {
 	my $self = shift;
 	my $floor = shift;

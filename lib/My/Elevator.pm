@@ -80,6 +80,13 @@ sub stop {
 	}
 
 	$self->{velocity} = 0;
+
+	# If we stopped at our current destination, remove it
+	my $floor = $self->current_floor;
+	my $destination = $self->current_destination;
+	if (defined $floor and defined $destination and $floor == $destination) {
+		shift @{$self->{destinations}};
+	}
 }
 
 # Add a passenger to the elevator
@@ -127,7 +134,6 @@ sub has_destination {
 sub current_destination {
 	$_[0]->destinations->[0];
 }
-
 
 
 

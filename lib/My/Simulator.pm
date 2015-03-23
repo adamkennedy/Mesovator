@@ -105,9 +105,16 @@ sub run {
 				# Stop the elevator when we reach our destination
 				if ($elevator->_floor == $elevator->current_destination) {
 					$elevator->stop;
+					$self->elevator_arrival($elevator);
 				}
 			}
+		}
 
+		# Any elevators left unused emit an idle event
+		foreach my $elevator (@{$self->elevators}) {
+			if ($elevator->is_idle) {
+				$self->controller->elevator_idle($elevator);
+			}
 		}
 	}
 
@@ -134,6 +141,22 @@ sub passenger_arrival {
 			$self->controller->floor_down_button_pressed($floor);
 		}
 	}
+}
+
+sub elevator_arrival {
+	my $self     = shift;
+	my $elevator = shift;
+	my $floor    = $elevator->current_floor;
+
+	# All passengers who have reached their destination get off
+	my @arrived = grep { $_->exit_floor == $floor } @{$elevator->passengers};
+	foreach my $passenger ( @arrived ) {
+		$elevator->remove_passenger($passenger);
+		$passenger->{exit_time} = $self->{tick};
+	}
+
+	# Emit event to the controller
+	$self->controller->elevator_stopped_at_floor($elevator, $floor);
 }
 
 1;
