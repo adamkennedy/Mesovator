@@ -132,7 +132,9 @@ sub run {
 		# if every passenger has reached their destination then we
 		# are going to halt anyway. Search in reverse order for a
 		# nearly O(1) cost.
-		if (all { defined $_->exit_time } reverse @{$self->passengers}) {
+		if (scalar @{$self->{queue}}) {
+			$halting = 0;
+		} elsif (all { defined $_->exit_time } reverse @{$self->passengers}) {
 			$halting = 1;
 		}
 	}
