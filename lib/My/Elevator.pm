@@ -10,6 +10,7 @@ package My::Elevator;
 use 5.010;
 use strict;
 use warnings;
+use Scalar::Util 'refaddr';
 use Params::Util ':ALL';
 use Object::Tiny qw{
 	id
@@ -86,6 +87,14 @@ sub add_passenger {
 	push @{$_[0]->passengers}, $_[1];
 }
 
+# Remove a passenger from the elevator
+sub remove_passenger {
+	my $self = shift;
+	my $passenger = shift;
+	$self->{passengers} = [
+		grep { refaddr($_) != refaddr($passenger) } @{$self->{passengers}}
+	];
+}
 
 
 
