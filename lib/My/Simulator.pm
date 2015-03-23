@@ -101,11 +101,19 @@ sub run {
 			if (not $elevator->is_stopped) {
 				# Apply current velocity
 				$elevator->_move;
+				$halting = 0;
 
 				# Stop the elevator when we reach our destination
 				if ($elevator->_floor == $elevator->current_destination) {
 					$elevator->stop;
 					$self->elevator_arrival($elevator);
+
+					# Head off if we have a new destination after stoppign
+					if ($elevator->has_destination) {
+						$elevator->start($elevator->current_destination);
+						$elevator->_move;
+						$halting = 0;
+					}
 				}
 			}
 		}
@@ -114,6 +122,13 @@ sub run {
 		foreach my $elevator (@{$self->elevators}) {
 			if ($elevator->is_idle) {
 				$self->controller->elevator_idle($elevator);
+
+				# Head off if we have a new destination after idling
+				if ($elevator->has_destination) {
+					$elevator->start($elevator->current_destination);
+					$elevator->_move;
+					$halting = 0;
+				}
 			}
 		}
 	}
