@@ -21,7 +21,7 @@ use My::Controller::NaiveRoundRobin;
 
 # Set up the simulation
 
-my $pax = t::lib::Data->load_passengers("passengers.csv");
+my $pax = t::lib::Data->load_passengers("trivial.csv");
 
 my $controller = My::Controller::NaiveRoundRobin->new(
 	floors => 3,

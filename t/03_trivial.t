@@ -18,7 +18,7 @@ use t::lib::Data;
 
 # Set up the simulation
 
-my $pax = t::lib::Data->load_passengers("passengers.csv");
+my $pax = t::lib::Data->load_passengers("trivial.csv");
 
 my $controller = My::Controller->new(
 	floors => 3,
