@@ -14,7 +14,7 @@ use Params::Util ':ALL';
 use Object::Tiny qw{
 	id
 	passengers
-	detinations
+	destinations
 };
 
 our $VERSION = '0.01';
