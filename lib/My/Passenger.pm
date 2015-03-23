@@ -5,11 +5,10 @@ use strict;
 use warnings;
 use Object::Tiny qw{
 	arrival_time
-	arrival_floor
-	destination_floor
-
-	departure_time
-	destination_time
+	entry_floor
+	entry_time
+	exit_floor
+	exit_time
 };
 
 our $VERSION = '0.01';

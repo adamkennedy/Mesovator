@@ -8,15 +8,17 @@ use 5.010;
 use strict;
 use warnings;
 use Test::More;
-use File::Spec;
-use Parse::CSV;
-use My::Controller;
-use My::Simulator;
 use t::lib::Data;
 
 my $pax = t::lib::Data->load_passengers("passengers.csv");
 is( scalar(@$pax), 1, "Found 1 journey" );
 isa_ok( $pax->[0], 'My::Passenger' );
+
+ok(defined $pax->[0]->arrival_time, 'pax 0 arrival');
+ok(defined $pax->[0]->entry_floor, 'pax 0 entry');
+ok(defined $pax->[0]->exit_floor, 'pax 0 exit');
+ok(not defined $pax->[0]->entry_time);
+ok(not defined $pax->[0]->exit_time);
 
 my $controller = My::Controller->new(
 	floors => 10,

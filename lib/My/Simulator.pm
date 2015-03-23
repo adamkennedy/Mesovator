@@ -50,7 +50,7 @@ sub new {
 # where I had more time I'd split this out.
 
 sub run {
-	
+	return 1;
 }
 
 1;

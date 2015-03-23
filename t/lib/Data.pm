@@ -5,6 +5,8 @@ use warnings;
 use File::Spec;
 use Parse::CSV;
 use My::Passenger;
+use My::Controller;
+use My::Simulator;
 
 sub load_passengers {
 	my $class = shift;
