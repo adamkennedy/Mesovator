@@ -50,7 +50,38 @@ sub new {
 # where I had more time I'd split this out.
 
 sub run {
+	my $self = shift;
+
+	# Might as well be private until the controller needs to be time aware
+	my $tick = 0;
+
+	# Track the simulation halting
+	my $halting = 0;
+
+	while ( not $halting ) {
+		$tick++;
+		$halting = 1;
+
+		# Handle the accidental infinite loop
+		if ($tick > 1_000_000_000) {
+			die "Aborting simulation, ran too long";
+		}
+
+		# New passengers arrive
+		my $pax = $self->passengers;
+		while ( $pax->[0] and $pax->[0]->arrival_time == $tick ) {
+			$self->passenger_arrives(shift @$pax);
+			$halting = 0;
+		}
+
+	}
+
 	return 1;
+}
+
+sub passenger_arrives {
+	my $self = shift;
+	my $passenger = shift;
 }
 
 1;
