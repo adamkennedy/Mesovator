@@ -13,4 +13,24 @@ use Object::Tiny qw{
 
 our $VERSION = '0.01';
 
+sub new {
+	my $self = shift->SUPER::new(@_);
+
+	# Basic validation
+	unless (_POSINT($self->arrival_time)) {
+		die "Missing or invalid arrival time";
+	}
+	unless (defined _NONNEGINT($self->entry_floor)) {
+		die "Missing or invalid entry floor";
+	}
+	unless (defined _NONNEGINT($self->exit_floor)) {
+		die "Missing or invalid exit floor";
+	}
+	if ($self->entry_floor == $self->exit_floor) {
+		die "Exit floor is the same as entry floor";
+	}
+
+	return $self;
+}
+
 1;
