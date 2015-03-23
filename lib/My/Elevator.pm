@@ -33,10 +33,10 @@ sub new {
 
 	# Current vertical location of the elevator in hypothetical units.
 	# Floors occur every 5 units.
-	$self->{position}     = 0;
+	$self->{position} = 0;
 
 	# The velocity we are travelling in hypothetical units.
-	$self->{velocity}     = 0;
+	$self->{velocity} = 0;
 
 	return $self;
 }
@@ -57,13 +57,13 @@ sub start {
 	unless (defined _NONNEGINT($position)) {
 		die "Missing or invalid position";
 	}
-	if ($self->velocity) {
+	if ($self->{velocity}) {
 		die "Attempted to start a moving elevator";
 	}
 
-	if ($position > $self->position) {
+	if ($position > $self->{position}) {
 		$self->{velocity} = 1;
-	} elsif ($position < $self->position) {
+	} elsif ($position < $self->{position}) {
 		$self->{velocity} = -1;
 	} else {
 		die "Elevator already at the destination";
@@ -92,7 +92,7 @@ sub is_idle {
 }
 
 sub is_stopped {
-	$_[0]->velocity == 0;
+	$_[0]->{velocity} == 0;
 }
 
 # Is the elevator at rest at a floor.
@@ -118,12 +118,12 @@ sub current_destination {
 
 # Floors are located every 5 positions
 sub _floor {
-	$_[0]->position % 5;
+	$_[0]->{position} % 5;
 }
 
 # Move the elevator a tick
 sub _move {
-	$_[0]->{position} = $_[0]->position + $_[0]->velocity;
+	$_[0]->{position} = $_[0]->{position} + $_[0]->{velocity};
 }
 
 1;
