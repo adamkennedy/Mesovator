@@ -133,10 +133,12 @@ sub current_floor {
 	$_[0]->is_stopped ? $_[0]->_floor : undef;
 }
 
+# Do we have any destinations?
 sub has_destination {
 	!! $_[0]->destinations->[0];
 }
 
+# What is the one we're going to now?
 sub current_destination {
 	$_[0]->destinations->[0];
 }
