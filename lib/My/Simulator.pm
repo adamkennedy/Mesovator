@@ -74,6 +74,25 @@ sub run {
 			$halting = 0;
 		}
 
+		# Handle elevator mechanics
+		foreach my $elevator (@{$self->elevators}) {
+			# Start the elevator toward the first destination if they
+			# are stopped and have a destination in queue.
+			if ($elevator->is_stopped and $elevator->has_destination) {
+				$elevator->start($elevator->current_destination);
+			}
+
+			if (not $elevator->is_stopped) {
+				# Apply current velocity
+				$elevator->_move;
+
+				# Stop the elevator when we reach our destination
+				if ($elevator->_floor == $elevator->current_destination) {
+					$elevator->stop;
+				}
+			}
+
+		}
 	}
 
 	return 1;
