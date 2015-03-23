@@ -12,6 +12,7 @@ use strict;
 use warnings;
 use Params::Util ':ALL';
 use Object::Tiny qw{
+	id
 	passengers
 	detinations
 };
@@ -20,6 +21,11 @@ our $VERSION = '0.01';
 
 sub new {
 	my $self = shift->SUPER::new(@_);
+
+	# Debugging id
+	unless (_POSINT($self->id)) {
+		die "Missing or invalid elevator id";
+	}
 
 	# Defaults
 	$self->{passengers}   = [];
