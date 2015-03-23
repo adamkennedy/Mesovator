@@ -28,7 +28,7 @@ This repository contains an implementation of an elevator control system, with t
 
 ## Language Choice
 
-For the sake of maximum amusement to the Mesosphere development team, and in consideration of the speed-development nature of the problem, I shall endeavor to meet your expectations and complete the task (primarily) in Perl.
+For the sake of maximum amusement to the Mesosphere development team, and in consideration of the speed-development nature of the problem and language familiarity, I shall complete the task (primarily) in Perl.
 
 Obviously, for any real form of elavator control system Perl is a horrible choice. But in this case, given the very short timeline and the open scope of the problem (to be discussed later) Perl's native testing infrastructure is actually pretty amenable to churning out lots of hacky but effective tests.
 
@@ -82,9 +82,9 @@ ith consideration to the above suggestion of limiting coding to the 4 hours but 
 
 ## Background Research
 
-Elevator control is an interesting problem domain to set for a speed-implementation test.
+Elevator control is an interesting problem domain for a speed-implementation test.
 
-To provide a general grounding in the field identified and purchased what I understand to be one of the definitive books on the field, Elevator Traffic Handbook: Theory and Practice by Dr Gina Barney (Kindle Edition. Physical would be nicer but $200+ is a little pricey)
+To provide a general grounding in the field identified and purchased one of the definitive books on the field, *Elevator Traffic Handbook: Theory and Practice* by Dr Gina Barney (Kindle Edition. Physical would be nicer but $200+ is a little pricey)
 
 http://www.amazon.com/Elevator-Traffic-Handbook-Theory-Practice-ebook/dp/B000SH1ZS6/ref=tmm_kin_title_popover?ie=UTF8&qid=1427069026&sr=8-2
 
@@ -96,15 +96,15 @@ In the single-elevator case, there are some simple algorithms which provide a re
 
 http://en.wikipedia.org/wiki/Elevator_algorithm
 
-However, there is no simple optimum strategies for scheduling multiple elevators.
+There is no simple optimum strategy for scheduling multiple elevators.
 
 Real world multiple elevator control strategies can be extremely complex, including fuzzy logic, machine learning and neural net approaches.
 
 ### Elevator Strategy is Inseparable from Building Context
 
-An issue repeatedly reinforced by Dr Barney is that elevator implementation should always be based on the traffic characteristics of a specific building.
+An issue repeatedly reinforced by Dr Barney is that elevator implementations are based on the traffic characteristics of a specific building.
 
-The type of building, density and timing of the Up Peak and Down Peak and nature of the passenger trips is integrally bound to the implementation strategy for control of the elevator. Strategies such as zone allocation, floor priorities, pre-location of idle elevators all emerge from the specifics of each building.
+The type of building, density and timing of the Up Peak and Down Peak, and the nature of the passenger trips is integrally bound to the implementation strategy for the elevator controller. Strategies such as load rating, zone allocation, floor priorities, and pre-location of idle elevators all emerge from the specific requirements of each building.
 
 The testing strategy MUST be able to be related to specific scenarios that can be modeled based on passenger simulations or real world recordings of passenger movements.
 
