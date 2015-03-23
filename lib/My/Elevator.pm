@@ -1,4 +1,4 @@
-package Elevator;
+package My::Elevator;
 
 # Implements a single elevator.
 #
@@ -23,7 +23,7 @@ sub new {
 	my $self = shift->SUPER::new(@_);
 
 	# Debugging id
-	unless (_POSINT($self->id)) {
+	unless (defined _NONNEGINT($self->id)) {
 		die "Missing or invalid elevator id";
 	}
 
@@ -52,8 +52,11 @@ sub new {
 # Trying to start a moving elevator is a bad smell so lets be strict here
 # despite time concerns.
 sub start {
-	my $self = shift;
-	my $position = _NONNEGINT(shift) or die "Missing or invalid position";
+	my $self     = shift;
+	my $position = shift;
+	unless (defined _NONNEGINT($position)) {
+		die "Missing or invalid position";
+	}
 	if ($self->velocity) {
 		die "Attempted to start a moving elevator";
 	}

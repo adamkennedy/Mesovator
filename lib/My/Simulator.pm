@@ -7,15 +7,13 @@ use Params::Util ':ALL';
 use My::Controller;
 use My::Passenger;
 use My::Elevator;
+use My::Lobby;
 
 use Object::Tiny qw{
 	controller
 	passengers
-
-	floors
-	lobby
-	call_up
-	call_down
+	lobbies
+	elevators
 };
 
 our $VERSION = '0.01';
@@ -32,10 +30,18 @@ sub new {
 	}
 
 	# Set up simulation state
-	$self->{floors}    = $self->controller->floors;
-	$self->{lobby}     = [ [] x $self->floors ];
-	$self->{call_up}   = [ 0 x $self->floors  ];
-	$self->{call_down} = [ 0 x $self->floors  ];
+	$self->{lobbies} = [
+		map {
+			My::Lobby->new(floor => $_)
+		} 
+		(0 .. $self->controller->floors - 1)
+	];
+	$self->{elevators} = [
+		map {
+			My::Elevator->new(id => $_)
+		}
+		(0 .. $self->controller->elevators - 1)
+	];
 
 	return $self;
 }
