@@ -143,6 +143,43 @@ sub current_destination {
 	$_[0]->destinations->[0];
 }
 
+# Up/Down Indicator Logic.
+# Elevators CAN go both up and down.
+
+# Can the elevator service an up request right now.
+sub going_up {
+	my $self = shift;
+	if ($self->velocity > 0) {
+		return 1;
+	}
+	if ($self->has_destination) {
+		return $self->current_destination > $self->_floor;
+	}
+
+	### BUG - Elevator doesn't know what the top floor is
+
+	# We can go up if they want
+	return 1;
+}
+
+# Can the elevator service an up request right now.
+sub going_down {
+	my $self = shift;
+	if ($self->velocity < 0) {
+		return 1;
+	}
+	if ($self->has_destination) {
+		return $self->current_destination < $self->_floor;
+	}
+	if ($self->_floor == 0) {
+		# Already on the ground floor, special case
+		return 0;
+	}
+
+	# We can go down if they want
+	return 1;
+}
+
 
 
 
