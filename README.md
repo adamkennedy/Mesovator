@@ -80,6 +80,14 @@ Again, I'm not sure precisely your intent with the test, but if you don't intent
 
 ith consideration to the above suggestion of limiting coding to the 4 hours but taking the option to educate myself on the problem domain in advance, I allowed myself some background research on the problem domain and potential implementation strategies.
 
+## Exploitability of the Download Website
+
+The website link provided to download the challenge is not only trivially exploitable, but is accidentally exploited by the auto-linking in gmail.
+
+The "=" sign is not recognised by the Gmail auto-linked, and clicking on the link results in *[suppressed]/index.html?submitter* rather than *[suppressed]/index.html?submitter=adam@ali.as*. And the resulting link works, providing no trace of when I started the challenge.
+
+For the record, it was in the vicinity of 2015-03-22 6:05pm San Francisco Time.
+
 ## Background Research
 
 Elevator control is an interesting problem domain for a speed-implementation test.
