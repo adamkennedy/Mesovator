@@ -34,4 +34,12 @@ sub new {
 	return $self;
 }
 
+sub going_up {
+	$_[0]->exit_floor > $_[0]->entry_floor;
+}
+
+sub going_down {
+	$_[0]->exit_floor < $_[0]->entry_floor;
+}
+
 1;
