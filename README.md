@@ -165,3 +165,7 @@ With consideration of the above, my approach for this project (once I get a chan
 In the situation that the test problem involves a single elevator, a controller will be provided based on the Elevator Algorithm with the addition of a ground floor idle park.
 
 In the situation that the test problem involves multiple elevators, no attempt will be made at an optimal solution but a collection of trivial controllers will be written or ported over from the Elevator Saga solutions.
+
+# Commentary
+
+Please see implementation commentary automatically timestamped via the commit log in GitHub.
