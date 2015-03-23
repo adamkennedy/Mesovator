@@ -31,6 +31,10 @@ sub new {
 		die "Missing or invalid passengers";
 	}
 
+	# HACK - Ugly untangling of the controller and simulation because
+	# HACK - I don't have time for the refactoring.
+	$self->controller->{simulator} = $self;
+
 	# Build a mutatable queue for the passenger list so we don't mutate
 	# the original passenger list.
 	$self->{queue} = [ @{$self->passengers} ];
@@ -160,9 +164,9 @@ sub passenger_arrival {
 	} else {
 		my $lobby = $self->lobby($floor);
 		if ($passenger->exit_floor > $floor) {
-			$self->controller->floor_up_button_pressed($floor);
+			$self->controller->lobby_up_button_pressed($floor);
 		} else {
-			$self->controller->floor_down_button_pressed($floor);
+			$self->controller->lobby_down_button_pressed($floor);
 		}
 	}
 }

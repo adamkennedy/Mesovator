@@ -28,6 +28,15 @@ sub top_floor {
 	$_[0]->floors - 1;
 }
 
+# HACK - Should refactor where things live, but no time.
+# HACK - Give the controller access to the simulator so it can get to the
+# HACK - lobby and elevator collections. This fuck composability and creates
+# HACK - entanglements hard to unwind in testing. Blerk.
+sub simulator {
+	$_[0]->{simulator} or die "Simulation is not currently running";
+}
+
+
 
 
 
@@ -57,14 +66,14 @@ sub elevator_idle {
 	# Null implementation
 }
 
-sub floor_up_button_pressed {
+sub lobby_up_button_pressed {
 	my $self = shift;
 	my $floor = shift;
 
 	# Null implementation
 }
 
-sub floor_down_button_pressed {
+sub lobby_down_button_pressed {
 	my $self = shift;
 	my $floor = shift;
 
