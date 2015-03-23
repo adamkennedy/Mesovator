@@ -77,7 +77,9 @@ sub elevator {
 sub run {
 	my $self = shift;
 
-	# Track the simulation halting
+	# Track the simulation halting.
+	# BUG - This approach is almost definitely wrong, or at least naive.
+	# BUG - If I wasn't so constrained for time I'd do something better.
 	my $halting = 0;
 
 	while ( not $halting ) {
@@ -109,6 +111,8 @@ sub run {
 				$halting = 0;
 
 				# Stop the elevator when we reach our destination
+				# BUG - This is in the wrong place, as it provides
+				# BUG - the opportunity to violate the physics model.
 				if ($elevator->_floor == $elevator->current_destination) {
 					$elevator->stop;
 					$self->elevator_arrival($elevator);
