@@ -29,6 +29,10 @@ sub new {
 		die "Missing or invalid passengers";
 	}
 
+	# Build a mutatable queue for the passenger list so we don't mutate
+	# the original passenger list.
+	$self->{queue} = [ @{$self->passengers} ];
+
 	# Set up simulation state
 	$self->{lobbies} = [
 		map {
@@ -74,9 +78,8 @@ sub run {
 		}
 
 		# New passengers arrive
-		my $pax = $self->passengers;
-		while ( $pax->[0] and $pax->[0]->arrival_time == $tick ) {
-			$self->passenger_arrives(shift @$pax);
+		while ( $self->{queue}->[0] and $self->{queue}->[0]->arrival_time == $tick ) {
+			$self->passenger_arrives(shift @{$self->{queue}});
 			$halting = 0;
 		}
 
