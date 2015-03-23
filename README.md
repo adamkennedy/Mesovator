@@ -4,6 +4,8 @@ A 4-hour implementation of an elevator control system
 
 # Preamble
 
+(Oh god, a preamble. So you're probably yawning already and about to ignore the rest of this and go straight to the code. I'm yawning as I read this and I wrote it... Fair enough. But then come back and read why it's the way it is afterwards. You can skip the bit about exploiting the testing process if you're in a hurry)
+
 The project is tasked as follows:
 
     The challenge is intended to help us evaluate your problem solving and development skills.
