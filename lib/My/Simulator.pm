@@ -98,6 +98,22 @@ sub run {
 		}
 
 		# Handle elevator mechanics
+		# Handle arriving elevators first
+		foreach my $elevator (@{$self->elevators}) {
+			if ($elevator->is_moving and $elevator->_floor == $elevator->current_destination) {
+				$elevator->stop;
+				$self->elevator_arrival($elevator);
+			}
+		}
+
+		# Any elevators now sitting unused emit an idle event
+		foreach my $elevator (@{$self->elevators}) {
+			if ($elevator->is_idle) {
+				$self->controller->elevator_idle($elevator);
+			}
+		}
+
+		# Physics phase of elevator handling
 		foreach my $elevator (@{$self->elevators}) {
 			# Start the elevator toward the first destination if they
 			# are stopped and have a destination in queue.
@@ -109,35 +125,6 @@ sub run {
 				# Apply current velocity
 				$elevator->_move;
 				$halting = 0;
-
-				# Stop the elevator when we reach our destination
-				# BUG - This is in the wrong place, as it provides
-				# BUG - the opportunity to violate the physics model.
-				if ($elevator->_floor == $elevator->current_destination) {
-					$elevator->stop;
-					$self->elevator_arrival($elevator);
-
-					# Head off if we have a new destination after stoppign
-					if ($elevator->has_destination) {
-						$elevator->start($elevator->current_destination);
-						$elevator->_move;
-						$halting = 0;
-					}
-				}
-			}
-		}
-
-		# Any elevators left unused emit an idle event
-		foreach my $elevator (@{$self->elevators}) {
-			if ($elevator->is_idle) {
-				$self->controller->elevator_idle($elevator);
-
-				# Head off if we have a new destination after idling
-				if ($elevator->has_destination) {
-					$elevator->start($elevator->current_destination);
-					$elevator->_move;
-					$halting = 0;
-				}
 			}
 		}
 

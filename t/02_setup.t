@@ -10,7 +10,7 @@ use warnings;
 use Test::More;
 use t::lib::Data;
 
-my $pax = t::lib::Data->load_passengers("passengers.csv");
+my $pax = t::lib::Data->load_passengers("trivial.csv");
 is( scalar(@$pax), 1, "Found 1 journey" );
 isa_ok( $pax->[0], 'My::Passenger' );
 

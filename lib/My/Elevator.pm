@@ -119,6 +119,10 @@ sub is_idle {
 	$_[0]->is_stopped and not $_[0]->has_destination;
 }
 
+sub is_moving {
+	$_[0]->{velocity} != 0;
+}
+
 sub is_stopped {
 	$_[0]->{velocity} == 0;
 }
