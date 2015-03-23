@@ -4,7 +4,8 @@ use 5.010;
 use strict;
 use warnings;
 use Params::Util ':ALL';
-use List::Util 'first all';
+use List::Util 'first';
+use List::MoreUtils 'all';
 use My::Controller;
 use My::Passenger;
 use My::Elevator;
@@ -136,7 +137,7 @@ sub run {
 		# if every passenger has reached their destination then we
 		# are going to halt anyway. Search in reverse order for a
 		# nearly O(1) cost.
-		if (all { defined $_->exit_time } reverse @{$self->passengers}}) {
+		if (all { defined $_->exit_time } reverse @{$self->passengers}) {
 			$halting = 1;
 		}
 	}

@@ -103,6 +103,12 @@ sub remove_passenger {
 	];
 }
 
+# Add a destination to the queue
+sub add_destination {
+	push @{$_[0]->{destinations}}, $_[1];
+}
+
+
 
 
 

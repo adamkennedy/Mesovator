@@ -6,11 +6,14 @@
 # 3 floors (0,1,2)
 # 1 passenger movement (0 -> 2)
 
+# Uses the EveryFloor brute force solution
+
 use 5.010;
 use strict;
 use warnings;
 use Test::More;
 use t::lib::Data;
+use My::Controller::EveryFloor;
 
 
 
@@ -20,7 +23,7 @@ use t::lib::Data;
 
 my $pax = t::lib::Data->load_passengers("passengers.csv");
 
-my $controller = My::Controller->new(
+my $controller = My::Controller::EveryFloor->new(
 	floors => 3,
 	elevators => 1,
 );
@@ -48,8 +51,6 @@ ok(defined $pax->[0]->arrival_time);
 ok(defined $pax->[0]->entry_floor);
 ok(defined $pax->[0]->exit_floor);
 ok(defined $pax->[0]->entry_time, '->entry_time set');
-
-# In the trivial case with a null controller we got on but never got off
-ok(! defined $pax->[0]->exit_time, '->exit_time set');
+ok(defined $pax->[0]->exit_time, '->exit_time set');
 
 done_testing();
