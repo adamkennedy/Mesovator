@@ -17,12 +17,15 @@ sub load_passengers {
 		names  => 1,
 		filter => sub { My::Passenger->new( %$_ ) },
 	);
-	my @journeys = ();
+	my @pax = ();
 	while ( my $journey = $parser->fetch ) {
-		push @journeys, $journey;
+		push @pax, $journey;
 	}
 
-	return \@journeys;
+	# Simulator assumes arrival times are in order
+	return [
+		sort { $a->{arrival_time} <=> $b->{arrival_time} } @pax
+	];
 }
 
 1;
