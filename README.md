@@ -34,6 +34,10 @@ For the sake of maximum amusement to the Mesosphere development team, and in con
 
 Obviously, for any real form of elavator control system Perl is a horrible choice. But in this case, given the very short timeline and the open scope of the problem (to be discussed later) Perl's native testing infrastructure is actually pretty amenable to churning out lots of hacky but effective tests.
 
+(4 hours later...)
+
+Plus, the Perl I ended up using is full of hacky hacks and shorthand and since I'm a bit stale and haven't written anything bigger than a thousand lines in the last 3 years it's kind of an embarrasment. If I had an extra hour I'd do a bunch of stylistic cleanups, but speed was more important.
+
 ## Programming Paradigm
 
 My preference for this would be to use an implementation based on an event model to get something vaguely soft-realtime capable.
@@ -50,11 +54,11 @@ So while it's totally unrealistic in any real world scenario, I'm going to embed
 
 The majority of this document is being written before starting the timer on the Take Home Test.
 
-Depending on what your purpose is with this test, it can be seen as having flaws that are potentially exploitable although it's hard to say if this is intentional or not. Perhaps you actually WANT to test the ambition and moxie of your candidates and are happy to have them exploit these flaws.
+It has a bunch of flaws that are fairly easily exploitable although it's hard to say if this is intentional or not. Perhaps you actually WANT to test the ambition and moxie of your candidates and are happy to have them exploit these flaws.
 
-Firstly, the suggestion in the email above of using "a link to a GitHub repository" to submit code results in any candidate using this approach leaving details of both the test and their implemenation visible to future people taking this test (as private repository usage involves a fee).
+The suggestion in the email above of using "a link to a GitHub repository" to submit code results in every candidate using this option leaving details of both the test and their implemenation visible to future people taking this test (as private repository usage involves a fee).
 
-Combined with the detail of the problem being elevator-related, this allows numerous previous implementations to be discoverable via a trivial Google search.
+Combined with the known detail of being elevator-related, this allows numerous previous implementations to be discoverable via a trivial Google search.
 
 http://lmgtfy.com/?q=mesosphere+elevator
 
@@ -68,19 +72,15 @@ That said, nobody on that list of repositories appears in the list of new hires 
 
 https://mesosphere.com/blog/categories/new-hire/
 
-... so none of them are worth investigating very much or (god forbid) forking.
+... so none of them are worth investigating.
 
-That said, it does mean the secret is blown in terms of what the problem is.
+For my implementation, I have taken some advantage of this in terms of background research and time to think about an implementation strategy, but I've tried to stay true to the spirit of the test by making sure all the code in this repository was written inside of the 4 hour window.
 
-For my implementation, I have taken some advantage of this in terms of background research and time to think about an implementation strategy, but I've tried to stay true to the spirit of the test by making sure all the code and implementation in this repository was written inside of the 4 hour window.
+It still mean the secret is blown wide open in terms of what the problem is
 
-With all that said, if your intention is to actually have this challenge be a secret then I would recommend not giving the option for people to use a public GitHub repository.
+Then again, completely preventing any knowledge of the problem is going to skew your testing bias towards Top Coder types and recent grads who have trained on speed-coding. That may not be a bias you want for a high-reliability product like DCOS.
 
-Then again, completely preventing any knowledge of the problem is going to skew your testing bias towards Top Coder types and recent grads who have trained on speed-coding and that may not be a bias you want for a high-reliability product like DCOS.
-
-Again, I'm not sure precisely your intent with the test, but if you don't intent people to find out in advance or have the potential to plagiarise/fork other people's work, then perhaps one option is to find a new challenge, only allow submissions via non-public channels, but provide the topic area a day in advance  so people have time to familiarise themselves with the problem domain before doing the specific challenge?
-
-ith consideration to the above suggestion of limiting coding to the 4 hours but taking the option to educate myself on the problem domain in advance, I allowed myself some background research on the problem domain and potential implementation strategies.
+If you don't want people to find out in advance or have the potential to plagiarise/fork other people's work, then perhaps one option is to find a new challenge and only allow submissions via non-public channels. Provide the topic area a day in advance so people have time to familiarise themselves with the problem domain before doing the specific challenge.
 
 ## Exploitability of the Download Website
 
@@ -94,7 +94,7 @@ For the record, it was in the vicinity of 2015-03-22 6:05pm San Francisco Time.
 
 Elevator control is an interesting problem domain for a speed-implementation test.
 
-To provide a general grounding in the field identified and purchased one of the definitive books on the field, *Elevator Traffic Handbook: Theory and Practice* by Dr Gina Barney (Kindle Edition. Physical would be nicer but $200+ is a little pricey)
+To provide a general grounding I identified and purchased one of the definitive books on the field, *Elevator Traffic Handbook: Theory and Practice* by Dr Gina Barney (Kindle Edition. Physical would be nicer but $200+ was a little pricey)
 
 http://www.amazon.com/Elevator-Traffic-Handbook-Theory-Practice-ebook/dp/B000SH1ZS6/ref=tmm_kin_title_popover?ie=UTF8&qid=1427069026&sr=8-2
 
@@ -171,3 +171,14 @@ In the situation that the test problem involves multiple elevators, no attempt w
 # Commentary
 
 Please see implementation commentary automatically timestamped via the commit log in GitHub.
+
+With respect to the following instruction...
+
+     The most interesting part of this challenge is the scheduling problem. The simplest
+     implementation would be to serve requests in FCFS (first-come, first-served) order.
+     This is clearly bad; imagine riding such an elevator! Please discuss how your algorithm
+     improves on FCFS in your write-up.
+
+...I find it challenging to accept use of the word "clearly" without any context. I accept that in the Up Peak or Down Peak scenarios it is terrible. But in a low-passenger load scenario (say late at night) with 16 elevators servicing 16 or less simultaneous riders, a FCFS dispatch may well result in optimal dispatch.
+
+And with such a huge volume of algorithm prior art in this field, the ability to compare algorithms under different load patterns is the key to understanding what approach to take for any particular building.
